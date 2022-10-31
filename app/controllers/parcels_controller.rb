@@ -1,4 +1,5 @@
 class ParcelsController < ApplicationController
+  before_action :authorize
   before_action :set_parcel, only: %i[show update destroy]
 
   # GET /parcels
