@@ -1,5 +1,5 @@
 class ParcelsController < ApplicationController
-  before_action :set_parcel, only: %i[ show update destroy ]
+  before_action :set_parcel, only: %i[show update destroy]
 
   # GET /parcels
   def index
@@ -10,21 +10,16 @@ class ParcelsController < ApplicationController
 
   # GET /parcels/1
   def show
+    @parcel = Parcel.find(params[:id])
     render json: @parcel
   end
 
   # POST /parcels
   def create
-    @parcel = Parcel.new(parcel_params)
-
-    if @parcel.save
-      render json: @parcel, status: :created, location: @parcel
-    else
-      render json: @parcel.errors, status: :unprocessable_entity
-    end
+    @parcel = Parcel.new(user_id: session[:user_id])
+    render json: @parcel, status: :created
   end
 
-  # PATCH/PUT /parcels/1
   def update
     if @parcel.update(parcel_params)
       render json: @parcel
@@ -39,13 +34,19 @@ class ParcelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_parcel
-      @parcel = Parcel.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def parcel_params
-      params.require(:parcel).permit(:recipient_name, :recipient_address, :recipient_contact, :weight, :from, :destination, :total_cost, :order_status)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_parcel
+    @parcel = Parcel.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def parcel_params
+    params.require(:parcel).permit(:recipient_name, :recipient_address, :recipient_contact, :weight, :from,
+                                   :destination, :total_cost, :order_status)
+  end
+
+  def authorize
+    return render json: { error: 'Not authorized' }, status: :unauthorized unless session.include? :user_id
+  end
 end
