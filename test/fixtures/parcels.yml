@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  recipient_name: MyString
+  recipient_address: MyString
+  recipient_contact: MyString
+  weight: 1
+  from: MyString
+  destination: MyString
+  total_cost: 1
+  order_status: MyString
+
+two:
+  recipient_name: MyString
+  recipient_address: MyString
+  recipient_contact: MyString
+  weight: 1
+  from: MyString
+  destination: MyString
+  total_cost: 1
+  order_status: MyString
