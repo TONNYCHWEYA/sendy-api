@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   get '/', to: 'sessions#index', as: 'root'
   get '/login', to: 'sessions#new', as: 'login'
   get '/me', to: 'users#show'
-  post '/', to: 'sessions#create'
+  post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
   get '/signup', to: 'users#new', as: 'signup'
+  delete 'logout', to: 'sessions#destroy'
   post '/signup', to: 'users#create'
 
   resources :parcels
