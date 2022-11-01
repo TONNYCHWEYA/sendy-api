@@ -2,34 +2,46 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy]
 
   # GET /users
-  def index
-    @users = User.all
+  # def index
+  #   @users = User.all
+  #   render json: @users
+  # end
 
-    render json: @users
-  end
 
-  # GET /users/1
-  def show
+  def show 
     @user = User.find_by(id: session[:user_id])
-    if @user
+    if @user 
       render json: @user
-    else
-      render json: { error: 'Not authorized' }, status: :unauthorized
+    else  
+      render json: { error: "Not authorized" }, status: :unauthorized
     end
   end
+end 
+
+  def new  
+    @author = Author.new
+  end
+  # GET /users/1
+  # def show
+  #   @user = User.find_by(id: session[:user_id])
+  #   if @user
+  #     render json: @user
+  #   else
+  #     render json: { error: 'Not authorized' }, status: :unauthorized
+  #   end
+  # end
 
   # POST /users
   def create
     @user = User.create(user_params)
     # respond_to do |_format|
-      if @user.valid?
-        # Tell the UserMailer to send a welcome email after confirming validity
-        # UserMailer.with(user: @user).welcome_email.deliver_later
-        # format.html { redirect_to(@user, notice: 'User was successfully created.') }
-       render json: { user: UserSerializer.new(@user) }, status: :created 
-      else
-        render json: { error: 'failed to create user' }, status: :unprocessable_entity
-      end
+    if @user.valid?
+      # Tell the UserMailer to send a welcome email after confirming validity
+      # UserMailer.with(user: @user).welcome_email.deliver_later
+      # format.html { redirect_to(@user, notice: 'User was successfully created.') }
+      render json: { user: UserSerializer.new(@user) }, status: :created
+    else
+      render json: { error: 'failed to create user' }, status: :unprocessable_entity
     end
   end
 

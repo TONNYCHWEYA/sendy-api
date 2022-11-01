@@ -1,12 +1,15 @@
 Rails.application.routes.draw do
-  get '/', to: 'sessions#index', as: 'root'
+  # get '/', to: 'sessions#index', as: 'root'
+
+  #sessions 
   get '/login', to: 'sessions#new', as: 'login'
-  get '/me', to: 'users#show'
   post '/login', to: 'sessions#create'
-  get '/logout', to: 'sessions#destroy'
-  get '/signup', to: 'users#new', as: 'signup'
   delete 'logout', to: 'sessions#destroy'
+  
+  #create new users
+  get '/signup', to: 'users#new', as: 'signup'
   post '/signup', to: 'users#create'
+  get '/me', to: 'users#show'
 
   resources :parcels
   resources :users
