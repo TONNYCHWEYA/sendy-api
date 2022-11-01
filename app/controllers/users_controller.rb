@@ -21,12 +21,12 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.create(user_params)
-    respond_to do |_format|
+    # respond_to do |_format|
       if @user.valid?
         # Tell the UserMailer to send a welcome email after confirming validity
-        UserMailer.with(user: @user).welcome_email.deliver_later
-        format.html { redirect_to(@user, notice: 'User was successfully created.') }
-        format.json { render json: { user: UserSerializer.new(@user) }, status: :created }
+        # UserMailer.with(user: @user).welcome_email.deliver_later
+        # format.html { redirect_to(@user, notice: 'User was successfully created.') }
+       render json: { user: UserSerializer.new(@user) }, status: :created 
       else
         render json: { error: 'failed to create user' }, status: :unprocessable_entity
       end
