@@ -1,5 +1,5 @@
 class ParcelsController < ApplicationController
-  authorize_resource class: false
+  # authorize_resource class: false
   before_action :set_parcel, only: %i[show update destroy]
 
   # GET /parcels
@@ -17,7 +17,7 @@ class ParcelsController < ApplicationController
 
   # POST /parcels
   def create
-    @parcel = Parcel.new(user_id: session[:user_id])
+    @parcel = Parcel.create(para)
     render json: @parcel, status: :created
   end
 
